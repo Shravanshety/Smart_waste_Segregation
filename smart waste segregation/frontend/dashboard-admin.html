@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Smart Waste Segregation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>⚙️ Admin Dashboard</h1>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard-admin.html">Dashboard</a>
+            <a href="#users">Manage Users</a>
+            <a href="#collectors">Collectors</a>
+            <a href="#reports">Reports</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <h3>👥 Total Users</h3>
+                <h2>1,247</h2>
+                <p>Registered Citizens</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🚛 Active Collectors</h3>
+                <h2>23</h2>
+                <p>Waste Collection Teams</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>♻️ Waste Collected</h3>
+                <h2>5,432</h2>
+                <p>Total Submissions</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>🎁 Points Distributed</h3>
+                <h2>45,678</h2>
+                <p>Incentive Points</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>➕ Create Collector Account</h3>
+            <form id="collectorForm">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div class="form-group">
+                        <label for="collectorUsername">Username:</label>
+                        <input type="text" id="collectorUsername" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="collectorEmail">Email:</label>
+                        <input type="email" id="collectorEmail" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="collectorPassword">Password:</label>
+                        <input type="password" id="collectorPassword" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="truckId">Truck ID:</label>
+                        <input type="text" id="truckId" class="form-control" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Create Collector Account</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>📊 System Statistics</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 1rem; text-align: left;">Waste Type</th>
+                        <th style="padding: 1rem; text-align: left;">Total Collections</th>
+                        <th style="padding: 1rem; text-align: left;">Avg Quality Score</th>
+                        <th style="padding: 1rem; text-align: left;">Points Awarded</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 0.5rem;">Dry Waste</td>
+                        <td style="padding: 0.5rem;">2,156</td>
+                        <td style="padding: 0.5rem;">8.2/10</td>
+                        <td style="padding: 0.5rem;">17,680</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem;">Wet Waste</td>
+                        <td style="padding: 0.5rem;">1,834</td>
+                        <td style="padding: 0.5rem;">7.8/10</td>
+                        <td style="padding: 0.5rem;">11,443</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem;">Hazardous Waste</td>
+                        <td style="padding: 0.5rem;">342</td>
+                        <td style="padding: 0.5rem;">9.1/10</td>
+                        <td style="padding: 0.5rem;">4,663</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem;">Mixed Waste</td>
+                        <td style="padding: 0.5rem;">1,100</td>
+                        <td style="padding: 0.5rem;">4.2/10</td>
+                        <td style="padding: 0.5rem;">1,386</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('collectorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('collectorUsername').value;
+            const email = document.getElementById('collectorEmail').value;
+            const password = document.getElementById('collectorPassword').value;
+            const truckId = document.getElementById('truckId').value;
+            
+            // Simulate account creation
+            alert(`Collector account created successfully!\nUsername: ${username}\nTruck ID: ${truckId}`);
+            
+            this.reset();
+        });
+    </script>
+</body>
+</html>

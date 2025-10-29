@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collector Dashboard - Smart Waste Segregation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🚛 Collector Dashboard</h1>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard-collector.html">Dashboard</a>
+            <a href="#scan">Scan QR</a>
+            <a href="#reports">Reports</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>📱 QR Code Scanner</h3>
+                <div class="form-group">
+                    <label for="qrInput">Scan or Enter QR Code:</label>
+                    <input type="text" id="qrInput" class="form-control" placeholder="USER_ID:123">
+                </div>
+                <button onclick="processQR()" class="btn btn-primary">Process QR Code</button>
+                
+                <div id="userInfo" style="display: none; margin-top: 1rem; padding: 1rem; background: #e7f3ff; border-radius: 8px;">
+                    <h4>User Information</h4>
+                    <p><strong>User ID:</strong> <span id="userId"></span></p>
+                    <p><strong>Username:</strong> <span id="username"></span></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 Submit Waste Report</h3>
+                <form id="wasteForm">
+                    <div class="form-group">
+                        <label for="wasteType">Waste Type:</label>
+                        <select id="wasteType" class="form-control" required>
+                            <option value="">Select Type</option>
+                            <option value="DRY">Dry Waste</option>
+                            <option value="WET">Wet Waste</option>
+                            <option value="HAZARDOUS">Hazardous Waste</option>
+                            <option value="MIXED">Mixed Waste</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qualityScore">Quality Score (1-10):</label>
+                        <input type="range" id="qualityScore" min="1" max="10" value="5" class="form-control">
+                        <span id="scoreDisplay">5</span>/10
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Today's Collections</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 1rem; text-align: left;">Time</th>
+                        <th style="padding: 1rem; text-align: left;">User ID</th>
+                        <th style="padding: 1rem; text-align: left;">Waste Type</th>
+                        <th style="padding: 1rem; text-align: left;">Quality Score</th>
+                    </tr>
+                </thead>
+                <tbody id="collectionsTable">
+                    <tr>
+                        <td style="padding: 0.5rem;">10:30 AM</td>
+                        <td style="padding: 0.5rem;">123</td>
+                        <td style="padding: 0.5rem;">Dry</td>
+                        <td style="padding: 0.5rem;">8/10</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('qualityScore').addEventListener('input', function() {
+            document.getElementById('scoreDisplay').textContent = this.value;
+        });
+
+        function processQR() {
+            const qrData = document.getElementById('qrInput').value;
+            if (qrData.startsWith('USER_ID:')) {
+                const userId = qrData.substring(8);
+                document.getElementById('userId').textContent = userId;
+                document.getElementById('username').textContent = 'User ' + userId;
+                document.getElementById('userInfo').style.display = 'block';
+            } else {
+                alert('Invalid QR Code format');
+            }
+        }
+
+        document.getElementById('wasteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const wasteType = document.getElementById('wasteType').value;
+            const qualityScore = document.getElementById('qualityScore').value;
+            
+            if (!wasteType) {
+                alert('Please select waste type');
+                return;
+            }
+            
+            // Add to collections table
+            const table = document.getElementById('collectionsTable');
+            const row = table.insertRow(0);
+            row.innerHTML = `
+                <td style="padding: 0.5rem;">${new Date().toLocaleTimeString()}</td>
+                <td style="padding: 0.5rem;">${document.getElementById('userId').textContent || 'N/A'}</td>
+                <td style="padding: 0.5rem;">${wasteType}</td>
+                <td style="padding: 0.5rem;">${qualityScore}/10</td>
+            `;
+            
+            alert('Waste report submitted successfully!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

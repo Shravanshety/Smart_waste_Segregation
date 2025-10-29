@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Waste Segregation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🔐 Login to Your Account</h1>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="card" style="max-width: 400px; margin: 2rem auto;">
+            <h2>Welcome Back!</h2>
+            
+            <form action="/UserServlet" method="post">
+                <input type="hidden" name="action" value="login">
+                
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Login as:</label>
+                    <select id="role" name="role" class="form-control">
+                        <option value="USER">End User</option>
+                        <option value="COLLECTOR">Waste Collector</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            
+            <p style="text-align: center; margin-top: 1rem;">
+                Don't have an account? <a href="signup.html">Sign up here</a>
+            </p>
+        </div>
+    </main>
+</body>
+</html>

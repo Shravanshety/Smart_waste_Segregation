@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Smart Waste Segregation</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>👤 User Dashboard</h1>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="dashboard-user.html">Dashboard</a>
+            <a href="#profile">Profile</a>
+            <a href="#history">History</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>🎁 Your Incentive Points</h3>
+                <div class="stat-card">
+                    <h2 id="totalPoints">150</h2>
+                    <p>Total Points Earned</p>
+                </div>
+            </div>
+
+            <div class="card qr-container">
+                <h3>📱 Your QR Code</h3>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=USER_ID:123" 
+                     alt="Your QR Code" class="qr-code">
+                <p>Show this QR code to waste collectors</p>
+            </div>
+
+            <div class="card">
+                <h3>📊 Waste Statistics</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div class="stat-card">
+                        <h4>Dry Waste</h4>
+                        <p>12 submissions</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Wet Waste</h4>
+                        <p>8 submissions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Recent Submissions</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 1rem; text-align: left;">Date</th>
+                        <th style="padding: 1rem; text-align: left;">Waste Type</th>
+                        <th style="padding: 1rem; text-align: left;">Quality Score</th>
+                        <th style="padding: 1rem; text-align: left;">Points Earned</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 0.5rem;">2024-01-15</td>
+                        <td style="padding: 0.5rem;">Dry</td>
+                        <td style="padding: 0.5rem;">9/10</td>
+                        <td style="padding: 0.5rem;">9 points</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem;">2024-01-14</td>
+                        <td style="padding: 0.5rem;">Wet</td>
+                        <td style="padding: 0.5rem;">8/10</td>
+                        <td style="padding: 0.5rem;">6 points</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
