@@ -28,6 +28,24 @@ export default function LoginScreen({ navigation }) {
     setLoading(false);
   };
 
+  const showDebugInfo = async () => {
+    try {
+      const users = await DatabaseService.getAllUsers();
+      Alert.alert('Debug Info', `Total users: ${users.length}\nUsers: ${users.map(u => u.username).join(', ')}`);
+    } catch (error) {
+      Alert.alert('Debug Error', error.message);
+    }
+  };
+
+  const resetStorage = async () => {
+    try {
+      await DatabaseService.clearStorage();
+      Alert.alert('Success', 'Storage cleared and reset with default users');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to reset storage');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Card style={styles.card}>
@@ -69,6 +87,22 @@ export default function LoginScreen({ navigation }) {
             style={styles.linkButton}
           >
             Don't have an account? Register
+          </Button>
+          
+          <Button
+            mode="text"
+            onPress={showDebugInfo}
+            style={styles.linkButton}
+          >
+            Debug: Show Users
+          </Button>
+          
+          <Button
+            mode="text"
+            onPress={resetStorage}
+            style={styles.linkButton}
+          >
+            Reset Storage
           </Button>
         </Card.Content>
       </Card>

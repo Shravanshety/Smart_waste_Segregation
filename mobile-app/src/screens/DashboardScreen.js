@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, RefreshControl, Alert } from 'react-native';
-import { Card, Title, Paragraph, Button, FAB, Avatar, ProgressBar } from 'react-native-paper';
+import { Card, Title, Paragraph, Button, Avatar, ProgressBar, IconButton } from 'react-native-paper';
 // QR Code component removed due to dependency conflicts
 // import QRCode from 'react-native-qrcode-svg';
 import DatabaseService from '../services/DatabaseService';
@@ -50,8 +50,29 @@ export default function DashboardScreen({ navigation, route }) {
     }
   };
 
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Logout', onPress: () => navigation.replace('Login') }
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Title style={styles.headerTitle}>Smart Waste App</Title>
+        <IconButton 
+          icon="logout" 
+          size={24} 
+          onPress={handleLogout}
+          iconColor="#f44336"
+        />
+      </View>
+      
       <ScrollView 
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
@@ -148,24 +169,14 @@ export default function DashboardScreen({ navigation, route }) {
               </Button>
             ) : (
               <>
-                <View style={styles.actionButtons}>
-                  <Button 
-                    mode="contained" 
-                    onPress={() => navigation.navigate('Camera')}
-                    style={styles.actionButton}
-                    icon="camera"
-                  >
-                    Log Waste
-                  </Button>
-                  <Button 
-                    mode="outlined" 
-                    onPress={() => navigation.navigate('QRScanner')}
-                    style={styles.actionButton}
-                    icon="qrcode-scan"
-                  >
-                    Scan QR
-                  </Button>
-                </View>
+                <Button 
+                  mode="contained" 
+                  onPress={() => navigation.navigate('Camera')}
+                  style={styles.actionButton}
+                  icon="camera"
+                >
+                  Log Waste
+                </Button>
                 <Button 
                   mode="text" 
                   onPress={requestCollectorRole}
@@ -197,12 +208,7 @@ export default function DashboardScreen({ navigation, route }) {
         </Card>
       </ScrollView>
 
-      <FAB
-        style={styles.fab}
-        icon="camera"
-        onPress={() => navigation.navigate('Camera')}
-        label="Log Waste"
-      />
+
     </View>
   );
 }
@@ -295,11 +301,18 @@ const styles = StyleSheet.create({
   collectorRequest: {
     marginTop: 5,
   },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#4CAF50',
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    paddingTop: 10,
+    backgroundColor: '#fff',
+    elevation: 2,
   },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+
 });

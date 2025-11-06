@@ -12,7 +12,8 @@ class DatabaseService {
         const defaultUsers = [
           { id: 1, username: 'admin', password: 'admin123', role: 'ADMIN', email: 'admin@app.com', qr_code: 'ADMIN_001', total_points: 0 },
           { id: 2, username: 'demo_user', password: 'password123', role: 'USER', email: 'demo@app.com', qr_code: 'USER_DEMO_001', total_points: 50 },
-          { id: 3, username: 'eco_warrior', password: 'green123', role: 'USER', email: 'eco@app.com', qr_code: 'USER_ECO_001', total_points: 120 }
+          { id: 3, username: 'eco_warrior', password: 'green123', role: 'USER', email: 'eco@app.com', qr_code: 'USER_ECO_001', total_points: 120 },
+          { id: 4, username: 'shravan', password: 'shetty123', role: 'USER', email: 'shravan@app.com', qr_code: 'USER_SHRAVAN_001', total_points: 0 }
         ];
         await AsyncStorage.setItem('users', JSON.stringify(defaultUsers));
         await AsyncStorage.setItem('collector_requests', JSON.stringify([]));
@@ -20,6 +21,25 @@ class DatabaseService {
       }
     } catch (error) {
       console.log('Storage init error:', error);
+    }
+  }
+
+  async clearStorage() {
+    try {
+      await AsyncStorage.clear();
+      await this.initStorage();
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
+  async getAllUsers() {
+    try {
+      const users = JSON.parse(await AsyncStorage.getItem('users') || '[]');
+      return users;
+    } catch (error) {
+      return [];
     }
   }
 
@@ -47,8 +67,9 @@ class DatabaseService {
         throw new Error('User already exists');
       }
       
+      const maxId = users.length > 0 ? Math.max(...users.map(u => u.id)) : 0;
       const newUser = {
-        id: users.length + 1,
+        id: maxId + 1,
         username: userData.username,
         email: userData.email,
         password: userData.password,

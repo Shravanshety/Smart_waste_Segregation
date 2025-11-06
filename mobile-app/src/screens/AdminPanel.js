@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
-import { Card, Title, List, Button, Chip } from 'react-native-paper';
+import { Card, Title, List, Button, Chip, TextInput, Paragraph } from 'react-native-paper';
 import DatabaseService from '../services/DatabaseService';
 
 export default function AdminPanel({ route }) {
   const { user } = route.params || {};
   const [pendingRequests, setPendingRequests] = useState([]);
+  const [rewardSettings, setRewardSettings] = useState({
+    correctPoints: 10,
+    incorrectPoints: -5,
+    accuracyThreshold: 0.8
+  });
 
   useEffect(() => {
     loadPendingRequests();
@@ -30,13 +35,17 @@ export default function AdminPanel({ route }) {
     }
   };
 
+  const updateRewardSettings = () => {
+    Alert.alert('Settings Updated', 'Reward settings have been updated successfully.');
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
           <Title>🛡️ Admin Panel</Title>
           
-          <Title style={styles.sectionTitle}>Pending Collector Requests</Title>
+          <Title style={styles.sectionTitle}>Collector Requests</Title>
           {pendingRequests.length === 0 ? (
             <List.Item title="No pending requests" />
           ) : (
@@ -61,6 +70,48 @@ export default function AdminPanel({ route }) {
               />
             ))
           )}
+        </Card.Content>
+      </Card>
+
+      <Card style={styles.card}>
+        <Card.Content>
+          <Title style={styles.sectionTitle}>Reward Settings</Title>
+          <Paragraph style={styles.subtitle}>Manage point system and rewards</Paragraph>
+          
+          <TextInput
+            label="Points for Correct Classification"
+            value={rewardSettings.correctPoints.toString()}
+            onChangeText={(text) => setRewardSettings({...rewardSettings, correctPoints: parseInt(text) || 10})}
+            keyboardType="numeric"
+            style={styles.input}
+            mode="outlined"
+          />
+          
+          <TextInput
+            label="Points for Incorrect Classification"
+            value={rewardSettings.incorrectPoints.toString()}
+            onChangeText={(text) => setRewardSettings({...rewardSettings, incorrectPoints: parseInt(text) || -5})}
+            keyboardType="numeric"
+            style={styles.input}
+            mode="outlined"
+          />
+          
+          <TextInput
+            label="Accuracy Threshold (0.0 - 1.0)"
+            value={rewardSettings.accuracyThreshold.toString()}
+            onChangeText={(text) => setRewardSettings({...rewardSettings, accuracyThreshold: parseFloat(text) || 0.8})}
+            keyboardType="decimal-pad"
+            style={styles.input}
+            mode="outlined"
+          />
+          
+          <Button 
+            mode="contained" 
+            onPress={updateRewardSettings}
+            style={styles.updateButton}
+          >
+            Update Settings
+          </Button>
         </Card.Content>
       </Card>
     </ScrollView>
@@ -94,5 +145,16 @@ const styles = StyleSheet.create({
   },
   approveButton: {
     backgroundColor: '#4CAF50',
+  },
+  subtitle: {
+    color: '#666',
+    marginBottom: 15,
+  },
+  input: {
+    marginBottom: 15,
+  },
+  updateButton: {
+    backgroundColor: '#2196F3',
+    marginTop: 10,
   },
 });

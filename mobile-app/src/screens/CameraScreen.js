@@ -220,41 +220,25 @@ export default function CameraScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
-        <View style={styles.cameraOverlay}>
-          <View style={styles.topControls}>
-            <Button mode="contained" onPress={() => navigation.navigate('QRScanner')}>
-              {qrCodeScanned ? '✅ QR Scanned' : 'Scan QR First'}
-            </Button>
-          </View>
-          
-          <View style={styles.bottomControls}>
-            <Button mode="outlined" onPress={pickImage} style={styles.controlButton}>
-              Gallery
-            </Button>
-            <Button 
-              mode="contained" 
-              onPress={takePicture} 
-              style={[styles.controlButton, styles.captureButton]}
-            >
-              📸 Detect
-            </Button>
-            <Button 
-              mode="outlined" 
-              onPress={() => setFacing(facing === 'back' ? 'front' : 'back')}
-              style={styles.controlButton}
-            >
-              Flip
-            </Button>
-          </View>
-          
-          <View style={styles.demoControls}>
-            <Button mode="text" onPress={simulateCapture}>
-              Demo Capture
-            </Button>
-          </View>
+      <CameraView style={styles.camera} facing={facing} ref={cameraRef} />
+      
+      <View style={styles.overlay}>
+        <View style={styles.topControls}>
+          <Button mode="contained" onPress={() => navigation.navigate('QRScanner')}>
+            {qrCodeScanned ? '✅ QR Scanned' : 'Scan QR First'}
+          </Button>
         </View>
-      </CameraView>
+        
+        <View style={styles.bottomControls}>
+          <Button 
+            mode="contained" 
+            onPress={takePicture} 
+            style={styles.captureButton}
+          >
+            📸 Capture & Detect
+          </Button>
+        </View>
+      </View>
     </View>
   );
 }
@@ -266,10 +250,14 @@ const styles = StyleSheet.create({
   camera: {
     flex: 1,
   },
-  cameraOverlay: {
-    flex: 1,
-    backgroundColor: 'transparent',
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     justifyContent: 'space-between',
+    backgroundColor: 'transparent',
   },
   topControls: {
     padding: 20,
@@ -282,15 +270,11 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  demoControls: {
-    alignItems: 'center',
-    paddingBottom: 20,
-  },
-  controlButton: {
-    minWidth: 80,
-  },
+
   captureButton: {
     backgroundColor: '#4CAF50',
+    alignSelf: 'center',
+    paddingHorizontal: 30,
   },
   card: {
     margin: 10,
